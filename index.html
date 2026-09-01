@@ -594,22 +594,28 @@
         let q = { topic, stage, inputType: 'single' };
 
         if (topic === 1) {
-            let decimals = getRandomInt(1, 3);
-            let denom = Math.pow(10, decimals);
-            let num;
+            let num, denom;
             if (stage === 1) {
+                let decimals = getRandomInt(1, 3);
+                denom = Math.pow(10, decimals);
                 num = getRandomInt(1, denom - 1);
-                q.promptZh = `將小數 ${num / denom} 化為分數（不需約簡）：`;
-                q.promptEn = `Convert decimal ${num / denom} to a fraction (No simplification):`;
+                let decimalVal = (num / denom).toFixed(decimals);
+
+                q.promptZh = `將小數 ${decimalVal} 化為分數（不需約簡）：`;
+                q.promptEn = `Convert decimal ${decimalVal} to a fraction (No simplification):`;
                 q.targetNum = num;
                 q.targetDenom = denom;
                 q.hintZh = `💡 <b>解題思路</b>：看小數點後有幾位，1位分母就是10，2位是100，3位是1000。小數數字直接當作分子！`;
                 q.hintEn = `💡 <b>Hint</b>: Count decimal places. 1 place = denominator 10, 2 places = 100. Put numbers in numerator!`;
             } else {
+                let decimals = getRandomInt(1, 3);
+                denom = Math.pow(10, decimals);
                 do { num = getRandomInt(1, denom - 1); } while (gcd(num, denom) === 1);
                 let g = gcd(num, denom);
-                q.promptZh = `將小數 ${num / denom} 化為最簡分數：`;
-                q.promptEn = `Convert decimal ${num / denom} to its simplest fraction:`;
+                let decimalVal = (num / denom).toFixed(decimals);
+
+                q.promptZh = `將小數 ${decimalVal} 化為最簡分數：`;
+                q.promptEn = `Convert decimal ${decimalVal} to its simplest fraction:`;
                 q.targetNum = num / g;
                 q.targetDenom = denom / g;
                 q.hintZh = `💡 <b>解題思路</b>：先寫成分母為 10/100/1000 的分數，再除以最大公因數進行約簡。`;
